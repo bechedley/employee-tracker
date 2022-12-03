@@ -17,11 +17,11 @@ const db = mysql.createConnection(
     process.env.DB_USER,
     process.env.DB_PASSWORD,
     {
-      host: 'localhost',
-    }
+        host: 'localhost',
+    },
   console.log(`Connected to the tracker_db database.`)
 );
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
