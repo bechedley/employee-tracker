@@ -22,4 +22,4 @@ VALUES ("Vanessa", "Condemi", 1, NULL),
        ("Sean", "Harris", 6, NULL),
        ("Damian", "Sadler", 5, 6),
        ("Mark", "Rizzo", 7, 3),
-       ("Adrian", "Goss", 8, 3);
+       ("Adrian", "Goss", 7, 3);
