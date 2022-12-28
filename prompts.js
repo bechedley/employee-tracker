@@ -1,11 +1,15 @@
 // Include packages and files required for this application
 const inquirer = require('inquirer');
-const cTable = require('console.table');
+
 
 // Objects to contain database table values
 const departments = [];
 const roles = [];
 const employees = [];
+
+const departmentData = [];
+const roleData = [];
+const employeeData = [];
 
 // Initial user prompt question
 const menuQuestion = [
@@ -122,17 +126,29 @@ function menu() {
   }
 
   function viewDepartments() {
-    console.log('SELECT * FROM department;');
+    
+    db.query('SELECT * FROM department', function (err, results) {
+      console.log(results);
+    });
+
     menu();
   }
 
   function viewRoles() {
-    console.log('SELECT * FROM role;');
+    
+    db.query('SELECT * FROM role', function (err, results) {
+      console.log(results);
+    });
+
     menu();
   }
 
   function viewEmployees() {
-    console.log('SELECT * FROM employee;');
+    
+    db.query('SELECT * FROM employee', function (err, results) {
+      console.log(results);
+    });
+
     menu();
   }
 
@@ -200,6 +216,7 @@ function menu() {
     menu();
   }
 
-  menu();
+
+  module.exports = prompts;
 
   
