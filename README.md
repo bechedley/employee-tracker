@@ -12,7 +12,7 @@ N/A
 
 Run node.js to initiate the Employee Tracker. Answer the user prompts to view, edit or delete the data in the Employee Tracker.
 
-Link to walkthrough video: (#)
+Link to walkthrough video: (https://watch.screencastify.com/v/rk4t8Jlu5KRgaScRonJ5)
 
 ![Screenshot of data table](./assets/employee-tracker-data.png)
 ![Screenshot of VS Code showing prompt questions](./assets/employee-tracker-prompts.png)
