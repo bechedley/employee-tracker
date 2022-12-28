@@ -99,11 +99,10 @@ function menu() {
                 deleteEmployee(answers);
 
             } else {
-                menuQuestion.complete(answers);
+                process.exit();
             }
         });
 }
-
 
 function viewDepartments() {
 
