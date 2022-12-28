@@ -31,22 +31,13 @@ function init() {
     menu();
 }
 
-// Objects to contain database table values
-const departments = [];
-const roles = [];
-const employees = [];
-
-const departmentData = [];
-const roleData = [];
-const employeeData = [];
-
 // Initial user prompt question
 const menuQuestion = [
     {
         type: 'list',
         message: 'What would you like to do?',
         name: 'menu',
-        choices: ["View all departments", "View all roles", "View all employees", "Add a department", "Add a role", "Add an employee", "Update an employee", "Quit"],
+        choices: ["View all departments", "View all roles", "View all employees", "Add a department", "Add a role", "Add an employee", "Update an employee", "Delete a department", "Delete a role", "Delete an employee", "Quit"],
     },
 ];
 
@@ -97,6 +88,15 @@ function menu() {
 
             } else if (answers.menu === "Update an employee") {
                 updateEmployeePrompts(answers);
+
+            } else if (answers.menu === "Delete a department") {
+                deleteDepartment(answers);
+
+            } else if (answers.menu === "Delete a role") {
+                deleteRole(answers);
+
+            } else if (answers.menu === "Delete an employee") {
+                deleteEmployee(answers);
 
             } else {
                 menuQuestion.complete(answers);
@@ -440,9 +440,102 @@ const updateEmployeeManager = () => {
     });
 };
 
-init();
+// Delete options
 
-// departmentChoices();
+const deleteDepartment = () => {
+    const sql = `SELECT * FROM department`
+    db.query(sql, (err, rows) => {
+      if (err) {
+        throw err;
+      }
+      const departments = rows.map(({name, id}) => ({name: name, value: id}));
+      inquirer.prompt([
+        {
+          type: "list",
+          name: "department",
+          message: "Which department would you like to delete?",
+          choices: departments
+        }
+      ])
+      .then(departmentAnswer => {
+        const department = departmentAnswer.department
+        const params = department;
+        const sql = `DELETE FROM department
+                      WHERE id = ?`
+        db.query(sql, params, (err) => {
+          if (err) {
+            throw err;
+          }
+          console.log("Department deleted!");
+          return viewDepartments();
+        });
+      });
+    });
+  };
+  
+  const deleteRole = () => {
+    const sql = `SELECT id, title FROM role`
+    db.query(sql, (err, rows) => {
+      if (err) {
+        throw err;
+      }
+      const roles = rows.map(({title, id}) => ({name: title, value: id}));
+      inquirer.prompt([
+        {
+          type: "list",
+          name: "role",
+          message: "Which role would you like to delete?",
+          choices: roles
+        }
+      ])
+      .then(roleAnswer => {
+        const role = roleAnswer.role
+        const params = role;
+        const sql = `DELETE FROM role
+                      WHERE id = ?`
+        db.query(sql, params, (err) => {
+          if (err) {
+            throw err;
+          }
+          console.log("Role deleted!");
+          return viewRoles();
+        });
+      });
+    });
+  };
+  
+  const deleteEmployee = () => {
+    const sql = `SELECT first_name, last_name, id FROM employee`
+    db.query(sql, (err, rows) => {
+      if (err) {
+        throw err;
+      }
+      const employees = rows.map(({first_name, last_name, id}) => ({name: `${first_name} ${last_name}`, value: id}));
+      inquirer.prompt([
+        {
+          type: "list",
+          name: "employee",
+          message: "Which employee would you like to delete?",
+          choices: employees
+        }
+      ])
+      .then(employeeAnswer => {
+        const employee = employeeAnswer.employee
+        const params = employee;
+        const sql = `DELETE FROM employee
+                      WHERE id = ?`
+        db.query(sql, params, (err) => {
+          if (err) {
+            throw err;
+          }
+          console.log("Employee deleted!");
+          return viewEmployees();
+        });
+      });
+    });
+  };
+
+init();
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
