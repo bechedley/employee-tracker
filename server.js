@@ -27,7 +27,7 @@ const db = mysql.createConnection(
 );
 
 function init() {
-    console.log('Welcome to the Employee Tracker!');
+    console.log('WELCOME TO THE EMPLOYEE TRACKER!');
     menu();
 }
 
